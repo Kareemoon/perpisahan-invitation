@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MPAT — Malam Perpisahan Akhir Tahun | SMKN 6 Kota Tangsel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="locked">
+
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <audio id="bg-music" loop preload="auto"></audio>
+
+  <section id="cover-gate" class="cover-gate">
+    <div class="gate-card">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+
+      <span class="mono-tag" id="gate-subtitle">THE FINAL CHAPTER — CLASS OF 2026</span>
+      <div class="ornament-star">✦</div>
+      <h1 class="display-title" id="gate-title">MPAT</h1>
+      <p class="gate-edition" id="gate-school">SMK NEGERI 6 KOTA TANGSEL</p>
+
+      <div class="divider-gold"></div>
+
+      <p class="guest-caption">KEPADA YTH. BAPAK / IBU / REKAN</p>
+      <h2 class="guest-name" id="guest-name">Tamu Kehormatan</h2>
+
+      <button id="open-btn" class="btn-gold">
+        <span>Buka Undangan</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+  
+  <main class="container">
+
+    <header class="hero-section reveal">
+      <div class="hero-frame">
+        <img id="hero-img" src="" alt="Foto Angkatan SMKN 6 Kota Tangsel" />
+        <div class="hero-vignette">
+          <span class="mono-tag" id="hero-school">SMK NEGERI 6 KOTA TANGSEL • ANGKATAN 2026</span>
+          <h1 class="display-title" id="hero-title">MPAT</h1>
+          <p class="hero-tagline" id="hero-subtitle">Malam Perpisahan Akhir Tahun</p>
+        </div>
+      </div>
+
+      <div class="greeting-panel">
+        <div class="ornament-star small">✦</div>
+        <p id="greeting-text" class="editorial-quote"></p>
+        <span class="mono-tag muted">— PANITIA PERPISAHAN ANGKATAN 2026</span>
+      </div>
+    </header>  
+    <section class="countdown-strip reveal" aria-label="Hitung Mundur Acara">
+      <div class="cd-box">
+        <span class="cd-num" id="cd-days">00</span>
+        <span class="cd-label">HARI</span>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-box">
+        <span class="cd-num" id="cd-hours">00</span>
+        <span class="cd-label">JAM</span>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-box">
+        <span class="cd-num" id="cd-mins">00</span>
+        <span class="cd-label">MENIT</span>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-box">
+        <span class="cd-num" id="cd-secs">00</span>
+        <span class="cd-label">DETIK</span>
+      </div>
+    </section>
+    <section class="editorial-card reveal">
+      <div class="section-header">
+        <span class="mono-tag">I. THE EVENING SCHEDULE</span>
+        <h2 class="section-title">Waktu, Lokasi & Busana</h2>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-block">
+          <span class="detail-kicker">TANGGAL & WAKTU</span>
+          <h3 class="detail-main" id="event-date"></h3>
+          <p class="detail-sub" id="event-time"></p>
+        </div>
+
+        <div class="detail-block">
+          <span class="detail-kicker">TEMPAT PERAYAAN</span>
+          <h3 class="detail-main" id="event-venue"></h3>
+          <p class="detail-sub" id="event-address"></p>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <a id="maps-btn" href="#" target="_blank" rel="noopener" class="btn-outline">
+          Petunjuk Arah (Maps)
+        </a>
+        <button id="cal-btn" type="button" class="btn-outline">
+          Simpan ke Kalender
+        </button>
+      </div>
+
+      <div class="dresscode-panel">
+        <div class="dress-text">
+          <span class="detail-kicker">PANDUAN DRESS CODE</span>
+          <p class="dress-desc" id="dress-desc"></p>
+        </div>
+        <div class="swatch-row" id="swatch-list"></div>
+      </div>
+    </section>
+    <section class="editorial-card reveal">
+      <div class="section-header">
+        <span class="mono-tag">II. ARCHIVE 2023 — 2026</span>
+        <h2 class="section-title">Jejak Kenangan Angkatan</h2>
+        <p class="section-desc">Klik foto untuk memperbesar momen perjalanan dari kelas X hingga XII.</p>
+      </div>
+
+      <div class="gallery-masonry" id="gallery-grid"></div>
+    </section>
+
+    <section class="editorial-card reveal" id="rsvp-section">
+      <div class="section-header">
+        <span class="mono-tag">III. RESERVATION & WISHES</span>
+        <h2 class="section-title">Konfirmasi Kehadiran</h2>
+        <p class="section-desc">Isi formulir di bawah ini untuk mendapatkan Gala E-Pass dan menuliskan pesan perpisahan.</p>
+      </div>
+
+      <form id="rsvp-form" class="rsvp-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="rsvp-name">Nama Lengkap</label>
+            <input type="text" id="rsvp-name" placeholder="Contoh: Nadya Putri" required />
+          </div>
+          <div class="form-group">
+            <label for="rsvp-class">Kelas / Jurusan / Status</label>
+            <select id="rsvp-class" required>
+              <option value="" disabled selected>Pilih Kelas / Keterangan</option>
+              <option value="XII RPL 1">XII RPL 1</option>
+              <option value="XII RPL 2">XII RPL 2</option>
+              <option value="XII TKJ 1">XII TKJ 1</option>
+              <option value="XII TKJ 2">XII TKJ 2</option>
+              <option value="XII DKV / BC 1">XII DKV / BC 1</option>
+              <option value="XII DKV / BC 2">XII DKV / BC 2</option>
+              <option value="Dewan Guru / Staf">Dewan Guru / Staf</option>
+              <option value="Tamu Undangan">Tamu Undangan</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="rsvp-status">Konfirmasi Kehadiran</label>
+            <select id="rsvp-status" required>
+              <option value="Hadir">Ya, Saya Akan Hadir</option>
+              <option value="Tidak Hadir">Maaf, Berhalangan Hadir</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="rsvp-diet">Catatan / Alergi Makanan (Opsional)</label>
+            <input type="text" id="rsvp-diet" placeholder="Contoh: Tidak ada / Vegetarian" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="rsvp-wish">Ucapan & Harapan Perpisahan</label>
+          <textarea id="rsvp-wish" rows="3" placeholder="Tuliskan pesan singkat untuk teman-teman dan guru..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-gold full-width" id="rsvp-submit-btn">
+          Kirim Konfirmasi & Dapatkan E-Pass
+        </button>
+      </form>
+
+      <div id="gala-pass-wrap" class="gala-pass-wrap hidden">
+        <div class="gala-pass">
+          <div class="pass-top">
+            <span class="mono-tag">OFFICIAL ADMISSION PASS</span>
+            <span class="pass-code" id="pass-code">MPAT-26-001</span>
+          </div>
+          <h3 class="pass-event" id="pass-event-name">MPAT — Malam Perpisahan Akhir Tahun</h3>
+          <div class="pass-body">
+            <div>
+              <span class="detail-kicker">NAMA TAMU</span>
+              <p class="pass-val" id="pass-guest-name">-</p>
+            </div>
+            <div>
+              <span class="detail-kicker">KELAS / STATUS</span>
+              <p class="pass-val" id="pass-guest-class">-</p>
+            </div>
+            <div>
+              <span class="detail-kicker">STATUS RSVP</span>
+              <p class="pass-val highlight" id="pass-guest-status">-</p>
+            </div>
+          </div>
+          <div class="pass-perforation"></div>
+          <div class="pass-footer">
+            <span>Tunjukkan E-Pass ini di meja registrasi.</span>
+            <button type="button" id="edit-rsvp-btn" class="text-btn">Isi Ulang / Ubah</button>
+          </div>
+        </div>
+      </div>
+      <div class="wishes-section">
+        <div class="wishes-head">
+          <span class="mono-tag">GUESTBOOK & WISHES</span>
+          <span class="wishes-count" id="wishes-count">Memuat...</span>
+        </div>
+        <div class="wishes-list" id="wishes-list"></div>
+      </div>
+    </section>
+
+    <footer class="site-footer reveal">
+      <div class="ornament-star">✦</div>
+      <h3 class="footer-title" id="footer-title">MPAT</h3>
+      <p class="footer-note">Butuh bantuan terkait registrasi atau informasi acara? Hubungi narahubung panitia.</p>
+
+      <div class="btn-group center">
+        <a id="wa-btn" href="#" target="_blank" rel="noopener" class="btn-outline">
+          Chat WhatsApp Panitia
+        </a>
+      </div>
+
+      <div class="footer-meta">
+        <span id="footer-copy">© 2026 Panitia MPAT — SMKN 6 Kota Tangsel</span>
+        <a href="admin.html" class="admin-link">Admin Dashboard →</a>
+      </div>
+    </footer>
+
+  </main>
+
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true">
+    <button id="lb-close" class="lb-close" aria-label="Tutup">✕</button>
+    <figure class="lb-figure">
+      <img id="lb-img" src="" alt="Preview Kenangan" />
+      <figcaption id="lb-caption"></figcaption>
+    </figure>
+  </div>
+
+  <button id="music-toggle" class="music-disc" aria-label="Putar atau Jeda Musik" title="Kontrol Musik Latar">
+    <div class="disc-inner">
+      <span id="music-icon">❚❚</span>
+    </div>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>

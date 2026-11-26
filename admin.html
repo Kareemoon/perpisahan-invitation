@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — MPAT SMKN 6 Kota Tangsel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Cormorant+Garamond:wght@600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <main id="admin-app" class="container admin-container">
+    <header class="admin-topbar">
+      <div>
+        <span class="mono-tag">COMMITTEE CONTROL ROOM</span>
+        <h1 class="section-title">Admin Panel — MPAT 2026</h1>
+      </div>
+      <a href="index.html" class="btn-outline">← Lihat Undangan</a>
+    </header>
+
+    <nav class="admin-tabs">
+      <button type="button" class="tab-btn active" data-tab="tab-rsvp">1. Daftar Tamu (RSVP)</button>
+      <button type="button" class="tab-btn" data-tab="tab-blast">2. Blast Undangan WA (CSV)</button>
+    </nav>
+
+    <section id="tab-rsvp" class="tab-panel active">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="detail-kicker">TOTAL RESPON</span>
+          <strong class="stat-num" id="stat-total">0</strong>
+        </div>
+        <div class="stat-card">
+          <span class="detail-kicker">KONFIRMASI HADIR</span>
+          <strong class="stat-num gold" id="stat-hadir">0</strong>
+        </div>
+        <div class="stat-card">
+          <span class="detail-kicker">TIDAK HADIR</span>
+          <strong class="stat-num muted" id="stat-absen">0</strong>
+        </div>
+      </div>
+
+      <div class="editorial-card">
+        <div class="card-toolbar">
+          <h2 class="admin-subtitle">Daftar Kehadiran & Ucapan</h2>
+          <div class="btn-group no-margin">
+            <button type="button" id="export-csv-btn" class="btn-gold small">Download Excel (.CSV)</button>
+            <button type="button" id="clear-rsvp-btn" class="btn-outline small">Reset Database</button>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <input type="text" id="rsvp-search" placeholder="Cari nama tamu, kelas, atau kode E-Pass..." />
+        </div>
+
+        <div class="table-wrap">
+          <table class="rsvp-table">
+            <thead>
+              <tr>
+                <th>Kode Pass</th>
+                <th>Nama Tamu</th>
+                <th>Kelas / Status</th>
+                <th>Kehadiran</th>
+                <th>Catatan</th>
+                <th>Ucapan</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="rsvp-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section id="tab-blast" class="tab-panel">
+      <div class="editorial-card">
+        <div class="card-toolbar">
+          <div>
+            <h2 class="admin-subtitle">Upload Daftar Kontak (.CSV)</h2>
+            <p class="section-desc">Format kolom CSV: <code>Nama, NomorWA</code> (contoh: <code>Raka Pratama, 081234567890</code>).</p>
+          </div>
+          <button type="button" id="download-sample-csv" class="btn-outline small">Download Contoh CSV</button>
+        </div>
+
+        <label class="csv-dropzone" for="csv-file-input">
+          <span class="mono-tag">PILIH FILE CSV DARI PERANGKAT</span>
+          <p id="csv-file-label">Klik di sini untuk upload file <strong>.csv</strong> (mendukung pemisah koma & titik koma Excel)</p>
+          <input type="file" id="csv-file-input" accept=".csv,text/csv" class="hidden" />
+        </label>
+
+        <div class="form-group" style="margin-top: 1.25rem;">
+          <label for="blast-template">Template Pesan WhatsApp (Gunakan <code>{nama}</code> dan <code>{link}</code>)</label>
+          <textarea id="blast-template" rows="5">Halo *{nama}*,&#10;&#10;Kami mengundang Anda untuk hadir dalam acara *MPAT (Malam Perpisahan Akhir Tahun) — SMK Negeri 6 Kota Tangsel*. Silakan buka undangan digital dan konfirmasi kehadiran Anda melalui tautan berikut:&#10;{link}&#10;&#10;Terima kasih!</textarea>
+        </div>
+
+        <div class="form-row" style="margin-top: 1rem; align-items: end;">
+          <div class="form-group">
+            <label for="blast-delay">Jeda Antar Pesan Auto-Blast (Detik)</label>
+            <select id="blast-delay">
+              <option value="3">3 Detik (Cepat)</option>
+              <option value="5" selected>5 Detik (Disarankan)</option>
+              <option value="8">8 Detik (Aman)</option>
+            </select>
+          </div>
+          <div class="btn-group no-margin">
+            <button type="button" id="start-blast-btn" class="btn-gold">▶ Mulai Auto-Blast WA</button>
+            <button type="button" id="stop-blast-btn" class="btn-outline hidden">❚❚ Hentikan</button>
+            <button type="button" id="clear-blast-btn" class="btn-outline">Hapus Daftar</button>
+          </div>
+        </div>
+
+        <p class="section-desc" style="margin-top: 0.65rem;">
+          *Catatan: Saat pertama kali menekan <strong>Mulai Auto-Blast WA</strong>, izinkan opsi <strong>Pop-up</strong> di browser agar tab WhatsApp dapat terbuka berurutan secara otomatis.
+        </p>
+
+        <div id="blast-progress-wrap" class="blast-progress-wrap hidden">
+          <div class="blast-progress-track">
+            <div id="blast-progress-bar" class="blast-progress-fill"></div>
+          </div>
+          <span class="mono-tag" id="blast-progress-text">Mengirim 0 / 0...</span>
+        </div>
+      </div>
+
+      <div class="stats-grid" style="margin-top: 1.25rem;">
+        <div class="stat-card">
+          <span class="detail-kicker">TOTAL KONTAK CSV</span>
+          <strong class="stat-num" id="blast-total">0</strong>
+        </div>
+        <div class="stat-card">
+          <span class="detail-kicker">SUDAH TERKIRIM</span>
+          <strong class="stat-num gold" id="blast-sent">0</strong>
+        </div>
+        <div class="stat-card">
+          <span class="detail-kicker">BELUM DIKIRIM</span>
+          <strong class="stat-num muted" id="blast-pending">0</strong>
+        </div>
+      </div>
+
+      <div class="editorial-card">
+        <h2 class="admin-subtitle" style="margin-top: 0;">Antrean Pengiriman WhatsApp</h2>
+        <div class="table-wrap">
+          <table class="rsvp-table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama Tamu</th>
+                <th>Nomor WA</th>
+                <th>Status</th>
+                <th>Aksi Manual</th>
+              </tr>
+            </thead>
+            <tbody id="blast-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>
