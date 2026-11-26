@@ -1,6 +1,8 @@
 const SUPABASE_URL = "https://uiitaooajfqnwlkwaemc.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_xOxu_hS0QEpOfxc4_9_tqQ_F_kOdZlQ";
-const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const db = (typeof supabase !== "undefined" && SUPABASE_ANON_KEY && !SUPABASE_ANON_KEY.includes("makjskjdajs"))
+  ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
 
 const DEFAULT_DATA = {
   title: "MPAT",
