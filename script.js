@@ -162,23 +162,22 @@ if (document.getElementById("cover-gate")) {
   setInterval(updateCountdown, 1000);
 
   // Download Kalender (.ics)
-  document.getElementById("cal-btn").addEventListener("click", () => {
-    const dt = cfg.isoDate.replace(/[-:]/g, "") + "00";
-    const ics = [
-      "BEGIN:VCALENDAR",
-      "VERSION:2.0",
-      "BEGIN:VEVENT",
-      `SUMMARY:${cfg.title} - ${cfg.subtitle}`,
-      `DESCRIPTION:${cfg.greeting}`,
-      `LOCATION:${cfg.venue}, ${cfg.address}`,
-      `DTSTART:${dt}`,
-      "END:VEVENT",
-      "END:VCALENDAR"
-    ].join("\n");
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
-    link.download = "undangan-mpat-2026.ics";
-    link.click();
+document.getElementById("cal-btn").addEventListener("click", () => {
+    const start = cfg.isoDate.replace(/[-:]/g, "") + "00";
+    // Otomatis set durasi acara 4 jam (18.30 - 22.30 WIB)
+    const endDate = new Date(new Date(cfg.isoDate).getTime() + 4 * 60 * 60 * 1000);
+    const pad = (n) => String(n).padStart(2, "0");
+    const end = `${endDate.getFullYear()}${pad(endDate.getMonth() + 1)}${pad(endDate.getDate())}T${pad(endDate.getHours())}${pad(endDate.getMinutes())}00`;
+
+    const calUrl = new URL("https://calendar.google.com/calendar/render");
+    calUrl.searchParams.set("action", "TEMPLATE");
+    calUrl.searchParams.set("text", `${cfg.title} - ${cfg.subtitle}`);
+    calUrl.searchParams.set("dates", `${start}/${end}`);
+    calUrl.searchParams.set("details", cfg.greeting);
+    calUrl.searchParams.set("location", `${cfg.venue}, ${cfg.address}`);
+    calUrl.searchParams.set("ctz", "Asia/Jakarta");
+
+    window.open(calUrl.toString(), "_blank");
   });
 
   // Direct RSVP Form, Gala E-Pass & Wishes Wall
