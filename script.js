@@ -1,12 +1,6 @@
-// =========================================================
-// KONFIGURASI SUPABASE
-// =========================================================
 const SUPABASE_URL = "https://uiitaooajfqnwlkwaemc.supabase.co";
-const SUPABASE_ANON_KEY = "TEMPEL_KUNCI_SB_PUBLISHABLE_LENGKAP_DI_SINI";
-
-const db = (typeof supabase !== "undefined" && SUPABASE_ANON_KEY.startsWith("sb_"))
-  ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-  : null;
+const SUPABASE_ANON_KEY = "sb_publishable_xOxu_hS0QEpOfxc4_9_tqQ_F_kOdZlQ";
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const DEFAULT_DATA = {
   title: "MPAT",
